@@ -1,5 +1,6 @@
 import 'package:flexible_video_player/flexible_video_player_controller.dart';
 import 'package:flexible_video_player/flexible_video_player_view.dart';
+import 'package:flexible_video_player/flexible_video_controller_view.dart';
 import 'package:flutter/material.dart';
 
 
@@ -33,17 +34,8 @@ class _VideoPageState extends State<VideoPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child : Stack(
-          children: [
-            FlexibleVideoView(
-              controller: controller,
-            ),
-
-            if(controller.value.isInitialized)...{
-
-            }
-
-          ],
+        child : FlexibleVideoView(
+          controller: controller,
         )
       )
     );

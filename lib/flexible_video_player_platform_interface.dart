@@ -28,14 +28,19 @@ abstract class FlexibleVideoPlayerPlatform extends PlatformInterface {
   }
 
   Future<void> setUrl(String url) => throw UnimplementedError();
-  Stream<dynamic> events() => throw UnimplementedError();
+  Stream<dynamic> events(int? textureId) => throw UnimplementedError();
   Future<void> play() => throw UnimplementedError();
   Future<void> pause() => throw UnimplementedError();
   Future<void> seekTo(int millis) => throw UnimplementedError();
   Future<void> setVolume(double volume) => throw UnimplementedError();
-  Future<Map<String, dynamic>> getTracks(int id) => throw UnimplementedError();
+  Future<Map<String, List<dynamic>>> getTracks() => throw UnimplementedError();
   Future<void> dispose() => throw UnimplementedError();
   Future<bool> isFullscreen() => throw UnimplementedError();
   Future<bool> checkPlaying() => throw UnimplementedError();
   Future<int?> initialize() => throw UnimplementedError();
+  Future<void> selectAndroidTrack({required int rendererIndex, required int groupIndex, required int trackIndex}) => throw UnimplementedError();
+  Future<void> enterPictureInPicture() => throw UnimplementedError();
+  Future<void> exitPictureInPicture() => throw UnimplementedError();
+  Future<void> enterFullscreen() => throw UnimplementedError();
+  Future<void> exitFullscreen() => throw UnimplementedError();
 }
