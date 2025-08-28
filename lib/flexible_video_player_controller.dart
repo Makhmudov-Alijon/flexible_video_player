@@ -65,7 +65,7 @@ class FlexibleVideoPlayerController extends ValueNotifier<VideoPlayerState> {
           position: Duration(milliseconds: pos),
           duration: Duration(milliseconds: dur),
         );
-        if(pos > 0 && !value.isTracksLoaded) {
+        if (pos > 0 && !value.isTracksLoaded) {
           getTracks();
         }
         break;
@@ -74,7 +74,10 @@ class FlexibleVideoPlayerController extends ValueNotifier<VideoPlayerState> {
         value = value.copyWith(isPlaying: playing);
         break;
       case 'pipState':
-        final playing = _toBool(event['inPip'], fallback: value.isPictureInPicture);
+        final playing = _toBool(
+          event['inPip'],
+          fallback: value.isPictureInPicture,
+        );
         value = value.copyWith(isPictureInPicture: playing);
         break;
       default:
@@ -119,24 +122,22 @@ class FlexibleVideoPlayerController extends ValueNotifier<VideoPlayerState> {
       final result = await FlexibleVideoPlayerPlatform.instance.getTracks();
       value = value.copyWith(isTracksLoaded: true);
 
-      if(defaultTargetPlatform == TargetPlatform.iOS){
-
-      }else{
+      if (defaultTargetPlatform == TargetPlatform.iOS) {
+      } else {
+        List<T> _mapTracks<T>(dynamic maybeList, T Function(Map<String, dynamic>) mapper) {
+          final list = maybeList as List<dynamic>? ?? [];
+          return list.map((e) => mapper(Map<String, dynamic>.from(e as Map))).toList();
+        }
         value = value.copyWith(
-            videoTrack: (result['video'] ?? []).toList()
-                .map((e) => VideoPlayerTrack.fromJson(e as Map<String, dynamic>))
-                .toList(),
-            audioTrack: (result['audio'] ?? []).toList()
-                .map((e) => VideoPlayerTrack.fromJson(e as Map<String, dynamic>))
-                .toList(),
-            subtitleTracks: (result['text'] ?? []).toList()
-                .map((e) => VideoPlayerTrack.fromJson(e as Map<String, dynamic>))
-                .toList(),
+          videoTrack: _mapTracks(result['video'], (m) => VideoPlayerTrack.fromJson(m)),
+          audioTrack: _mapTracks(result['audio'], (m) => VideoPlayerTrack.fromJson(m)),
+          subtitleTracks: _mapTracks(result['text'], (m) => VideoPlayerTrack.fromJson(m)),
           selectedVideoTrack: _parseFirst(result['current_video']),
           selectedAudioTrack: _parseFirst(result['current_audio']),
           selectedSubtitleTrack: _parseFirst(result['current_text']),
         );
       }
+
     } catch (e) {
       value = value.copyWith(errorDescription: e.toString());
     }
@@ -150,8 +151,16 @@ class FlexibleVideoPlayerController extends ValueNotifier<VideoPlayerState> {
     return null;
   }
 
-  Future<void> selectAndroidTrack({required int rendererIndex, required int groupIndex, required int trackIndex}) async{
-    FlexibleVideoPlayerPlatform.instance.selectAndroidTrack(rendererIndex: rendererIndex, groupIndex: groupIndex, trackIndex: trackIndex);
+  Future<void> selectAndroidTrack({
+    required int rendererIndex,
+    required int groupIndex,
+    required int trackIndex,
+  }) async {
+    FlexibleVideoPlayerPlatform.instance.selectAndroidTrack(
+      rendererIndex: rendererIndex,
+      groupIndex: groupIndex,
+      trackIndex: trackIndex,
+    );
   }
 
   Future<void> play() => FlexibleVideoPlayerPlatform.instance.play();
@@ -170,23 +179,25 @@ class FlexibleVideoPlayerController extends ValueNotifier<VideoPlayerState> {
   Future<bool> checkPlaying() =>
       FlexibleVideoPlayerPlatform.instance.checkPlaying();
 
-  Future<void> enterPictureInPicture() async{
+  Future<void> enterPictureInPicture() async {
     FlexibleVideoPlayerPlatform.instance.enterPictureInPicture().then((_) {
       value = value.copyWith(isPictureInPicture: true);
     });
   }
-  Future<void> exitPictureInPicture() async{
+
+  Future<void> exitPictureInPicture() async {
     FlexibleVideoPlayerPlatform.instance.exitPictureInPicture().then((_) {
       value = value.copyWith(isPictureInPicture: false);
     });
   }
 
-  Future<void> enterFullscreen() async{
+  Future<void> enterFullscreen() async {
     FlexibleVideoPlayerPlatform.instance.enterFullscreen().then((_) {
       value = value.copyWith(isFullscreen: true);
     });
   }
-  Future<void> exitFullscreen() async{
+
+  Future<void> exitFullscreen() async {
     FlexibleVideoPlayerPlatform.instance.exitFullscreen().then((_) {
       value = value.copyWith(isFullscreen: false);
     });
