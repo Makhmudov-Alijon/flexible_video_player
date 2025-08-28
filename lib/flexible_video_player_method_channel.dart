@@ -24,22 +24,22 @@ class MethodChannelFlexibleVideoPlayer implements FlexibleVideoPlayerPlatform {
   }
 
   @override
-  Future<void> setUrl(String url) {
-    return methodChannel.invokeMethod('setUrl', {'url': url});
+  Future<void> setUrl(String url,int textureId) {
+    return methodChannel.invokeMethod('setUrl', {'url': url,'textureId': textureId});
   }
 
   @override
-  Future<void> play() => methodChannel.invokeMethod('play');
+  Future<void> play(int textureId) => methodChannel.invokeMethod('play',{"textureId": textureId});
   @override
-  Future<void> pause() => methodChannel.invokeMethod('pause');
+  Future<void> pause(int textureId) => methodChannel.invokeMethod('pause',{"textureId": textureId});
   @override
-  Future<void> seekTo(int millis) => methodChannel.invokeMethod('seekTo', {'position': millis});
+  Future<void> seekTo(int millis,int textureId) => methodChannel.invokeMethod('seekTo', {'position': millis,"textureId": textureId});
   @override
-  Future<void> setVolume(double volume) => methodChannel.invokeMethod('setVolume', {'volume': volume});
+  Future<void> setVolume(double volume,int textureId) => methodChannel.invokeMethod('setVolume', {'volume': volume,"textureId": textureId});
 
   @override
-  Future<Map<String, List<dynamic>>> getTracks() async {
-    final res = await methodChannel.invokeMapMethod<String, List<dynamic>>('getTracks');
+  Future<Map<String, List<dynamic>>> getTracks(int textureId) async {
+    final res = await methodChannel.invokeMapMethod<String, List<dynamic>>('getTracks',{"textureId": textureId});
     return res ?? {};
   }
 
@@ -76,15 +76,15 @@ class MethodChannelFlexibleVideoPlayer implements FlexibleVideoPlayerPlatform {
   }
 
   @override
-  Future<void> dispose() => methodChannel.invokeMethod('dispose',);
+  Future<void> dispose(int textureId) => methodChannel.invokeMethod('dispose',{"textureId": textureId});
   @override
-  Future<bool> isFullscreen() async {
-    final b = await methodChannel.invokeMethod<bool>('isFullscreen');
+  Future<bool> isFullscreen(int textureId) async {
+    final b = await methodChannel.invokeMethod<bool>('isFullscreen',{"textureId": textureId});
     return b ?? false;
   }
   @override
-  Future<bool> checkPlaying() async {
-    final b = await methodChannel.invokeMethod<bool>('checkPlaying',);
+  Future<bool> checkPlaying(int textureId) async {
+    final b = await methodChannel.invokeMethod<bool>('checkPlaying',{"textureId": textureId});
     return b ?? false;
   }
 
@@ -109,11 +109,11 @@ class MethodChannelFlexibleVideoPlayer implements FlexibleVideoPlayerPlatform {
     });
   }
   @override
-  Future<void> enterPictureInPicture() => methodChannel.invokeMethod('enterPictureInPicture');
+  Future<void> enterPictureInPicture(int textureId) => methodChannel.invokeMethod('enterPictureInPicture',{"textureId": textureId});
   @override
-  Future<void> exitPictureInPicture() => methodChannel.invokeMethod('exitPictureInPicture');
+  Future<void> exitPictureInPicture(int textureId) => methodChannel.invokeMethod('exitPictureInPicture',{"textureId": textureId});
   @override
-  Future<void> enterFullscreen() => methodChannel.invokeMethod('enterFullscreen');
+  Future<void> enterFullscreen(int textureId) => methodChannel.invokeMethod('enterFullscreen',{"textureId": textureId});
   @override
-  Future<void> exitFullscreen() => methodChannel.invokeMethod('exitFullscreen');
+  Future<void> exitFullscreen(int textureId) => methodChannel.invokeMethod('exitFullscreen',{"textureId": textureId});
 }

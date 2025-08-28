@@ -107,7 +107,7 @@ class FlexibleVideoPlayerController extends ValueNotifier<VideoPlayerState> {
         await initialize();
       }
 
-      FlexibleVideoPlayerPlatform.instance.setUrl(url).then((value) {
+      FlexibleVideoPlayerPlatform.instance.setUrl(url,value.textureId!).then((value) {
         _subscribe();
       });
 
@@ -119,7 +119,7 @@ class FlexibleVideoPlayerController extends ValueNotifier<VideoPlayerState> {
 
   Future<void> getTracks() async {
     try {
-      final result = await FlexibleVideoPlayerPlatform.instance.getTracks();
+      final result = await FlexibleVideoPlayerPlatform.instance.getTracks(value.textureId!);
       value = value.copyWith(isTracksLoaded: true);
 
       if (defaultTargetPlatform == TargetPlatform.iOS) {
@@ -163,42 +163,42 @@ class FlexibleVideoPlayerController extends ValueNotifier<VideoPlayerState> {
     );
   }
 
-  Future<void> play() => FlexibleVideoPlayerPlatform.instance.play();
+  Future<void> play() => FlexibleVideoPlayerPlatform.instance.play(value.textureId!);
 
-  Future<void> pause() => FlexibleVideoPlayerPlatform.instance.pause();
+  Future<void> pause() => FlexibleVideoPlayerPlatform.instance.pause(value.textureId!);
 
   Future<void> seekTo(int millis) =>
-      FlexibleVideoPlayerPlatform.instance.seekTo(millis);
+      FlexibleVideoPlayerPlatform.instance.seekTo(millis,value.textureId!);
 
   Future<void> setVolume(double v) =>
-      FlexibleVideoPlayerPlatform.instance.setVolume(v);
+      FlexibleVideoPlayerPlatform.instance.setVolume(v,value.textureId!);
 
   Future<bool> isFullscreen() =>
-      FlexibleVideoPlayerPlatform.instance.isFullscreen();
+      FlexibleVideoPlayerPlatform.instance.isFullscreen(value.textureId!);
 
   Future<bool> checkPlaying() =>
-      FlexibleVideoPlayerPlatform.instance.checkPlaying();
+      FlexibleVideoPlayerPlatform.instance.checkPlaying(value.textureId!);
 
   Future<void> enterPictureInPicture() async {
-    FlexibleVideoPlayerPlatform.instance.enterPictureInPicture().then((_) {
+    FlexibleVideoPlayerPlatform.instance.enterPictureInPicture(value.textureId!).then((_) {
       value = value.copyWith(isPictureInPicture: true);
     });
   }
 
   Future<void> exitPictureInPicture() async {
-    FlexibleVideoPlayerPlatform.instance.exitPictureInPicture().then((_) {
+    FlexibleVideoPlayerPlatform.instance.exitPictureInPicture(value.textureId!).then((_) {
       value = value.copyWith(isPictureInPicture: false);
     });
   }
 
   Future<void> enterFullscreen() async {
-    FlexibleVideoPlayerPlatform.instance.enterFullscreen().then((_) {
+    FlexibleVideoPlayerPlatform.instance.enterFullscreen(value.textureId!).then((_) {
       value = value.copyWith(isFullscreen: true);
     });
   }
 
   Future<void> exitFullscreen() async {
-    FlexibleVideoPlayerPlatform.instance.exitFullscreen().then((_) {
+    FlexibleVideoPlayerPlatform.instance.exitFullscreen(value.textureId!).then((_) {
       value = value.copyWith(isFullscreen: false);
     });
   }
@@ -208,7 +208,7 @@ class FlexibleVideoPlayerController extends ValueNotifier<VideoPlayerState> {
     await _eventSub?.cancel();
     _eventSub = null;
     try {
-      await FlexibleVideoPlayerPlatform.instance.dispose();
+      await FlexibleVideoPlayerPlatform.instance.dispose(value.textureId!);
     } catch (e) {
       if (kDebugMode) debugPrint('Error calling platform dispose: $e');
     }

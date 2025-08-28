@@ -27,20 +27,20 @@ abstract class FlexibleVideoPlayerPlatform extends PlatformInterface {
     throw UnimplementedError('platformVersion() has not been implemented.');
   }
 
-  Future<void> setUrl(String url) => throw UnimplementedError();
+  Future<void> setUrl(String url,int textureId) => throw UnimplementedError();
   Stream<dynamic> events(int? textureId) => throw UnimplementedError();
-  Future<void> play() => throw UnimplementedError();
-  Future<void> pause() => throw UnimplementedError();
-  Future<void> seekTo(int millis) => throw UnimplementedError();
-  Future<void> setVolume(double volume) => throw UnimplementedError();
-  Future<Map<String, List<dynamic>>> getTracks() => throw UnimplementedError();
-  Future<void> dispose() => throw UnimplementedError();
-  Future<bool> isFullscreen() => throw UnimplementedError();
-  Future<bool> checkPlaying() => throw UnimplementedError();
+  Future<void> play(int textureId) => throw UnimplementedError();
+  Future<void> pause(int textureId) => throw UnimplementedError();
+  Future<void> seekTo(int millis,int textureId) => throw UnimplementedError();
+  Future<void> setVolume(double volume,int textureId) => throw UnimplementedError();
+  Future<Map<String, List<dynamic>>> getTracks(int textureId) => throw UnimplementedError();
+  Future<void> dispose(int textureId) => throw UnimplementedError();
+  Future<bool> isFullscreen(int textureId) => throw UnimplementedError();
+  Future<bool> checkPlaying(int textureId) => throw UnimplementedError();
   Future<int?> initialize() => throw UnimplementedError();
   Future<void> selectAndroidTrack({required int rendererIndex, required int groupIndex, required int trackIndex}) => throw UnimplementedError();
-  Future<void> enterPictureInPicture() => throw UnimplementedError();
-  Future<void> exitPictureInPicture() => throw UnimplementedError();
-  Future<void> enterFullscreen() => throw UnimplementedError();
-  Future<void> exitFullscreen() => throw UnimplementedError();
+  Future<void> enterPictureInPicture(int textureId) => throw UnimplementedError();
+  Future<void> exitPictureInPicture(int textureId) => throw UnimplementedError();
+  Future<void> enterFullscreen(int textureId) => throw UnimplementedError();
+  Future<void> exitFullscreen(int textureId) => throw UnimplementedError();
 }

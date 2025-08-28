@@ -18,19 +18,6 @@ class FlexibleVideoView extends StatefulWidget {
 class _FlexibleVideoViewState extends State<FlexibleVideoView> {
 
   @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance
-        .addPostFrameCallback((_) => _checkPlaying());
-  }
-
-  Future<void> _checkPlaying() async {
-    if(await widget.controller.checkPlaying()){
-      widget.controller.getTracks();
-    }
-  }
-
-  @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
       valueListenable: widget.controller,
