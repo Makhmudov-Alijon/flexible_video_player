@@ -1,5 +1,5 @@
 name: flexible_video_player
-description: "A new Flutter project."
+description: "A Flutter plugin that provides easy Picture-in-Picture video playback on Android and iOS."
 version: 0.0.1
 homepage: https://github.com/Makhmudov-Alijon
 
