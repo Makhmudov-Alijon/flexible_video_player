@@ -39,8 +39,8 @@ class FlexibleVideoPlayerController extends ValueNotifier<VideoPlayerState> {
     _eventSub = stream.listen(
       _handleEvent,
       onError: (e) {
-        if (kDebugMode)
-          debugPrint('FlexibleVideoPlayerController event error: $e');
+        // if (kDebugMode)
+        //   debugPrint('FlexibleVideoPlayerController event error: $e');
         value = value.copyWith(errorDescription: e?.toString());
       },
       onDone: () {
@@ -79,8 +79,8 @@ class FlexibleVideoPlayerController extends ValueNotifier<VideoPlayerState> {
         break;
       default:
         // ignore unknown events but optionally log
-        if (kDebugMode)
-          debugPrint('FlexibleVideoPlayerController unknown event: $event');
+        // if (kDebugMode)
+        //   debugPrint('FlexibleVideoPlayerController unknown event: $event');
         break;
     }
   }
@@ -117,27 +117,25 @@ class FlexibleVideoPlayerController extends ValueNotifier<VideoPlayerState> {
   Future<void> getTracks() async {
     try {
       final result = await FlexibleVideoPlayerPlatform.instance.getTracks();
-      if (result != null) {
-        value = value.copyWith(isTracksLoaded: true);
+      value = value.copyWith(isTracksLoaded: true);
 
-        if(defaultTargetPlatform == TargetPlatform.iOS){
+      if(defaultTargetPlatform == TargetPlatform.iOS){
 
-        }else{
-          value = value.copyWith(
-            videoTrack: (result['video'] as List? ?? [])
-                .map((e) => VideoPlayerTrack.fromJson((e as Map).cast<String, dynamic>()))
+      }else{
+        value = value.copyWith(
+            videoTrack: (result['video'] ?? []).toList()
+                .map((e) => VideoPlayerTrack.fromJson(e as Map<String, dynamic>))
                 .toList(),
-            audioTrack: (result['audio'] as List? ?? [])
-                .map((e) => VideoPlayerTrack.fromJson((e as Map).cast<String, dynamic>()))
+            audioTrack: (result['audio'] ?? []).toList()
+                .map((e) => VideoPlayerTrack.fromJson(e as Map<String, dynamic>))
                 .toList(),
-            subtitleTracks: (result['text'] as List? ?? [])
-                .map((e) => VideoPlayerTrack.fromJson((e as Map).cast<String, dynamic>()))
+            subtitleTracks: (result['text'] ?? []).toList()
+                .map((e) => VideoPlayerTrack.fromJson(e as Map<String, dynamic>))
                 .toList(),
-            selectedVideoTrack: _parseFirst(result['current_video']),
-            selectedAudioTrack: _parseFirst(result['current_audio']),
-            selectedSubtitleTrack: _parseFirst(result['current_text']),
-          );
-        }
+          selectedVideoTrack: _parseFirst(result['current_video']),
+          selectedAudioTrack: _parseFirst(result['current_audio']),
+          selectedSubtitleTrack: _parseFirst(result['current_text']),
+        );
       }
     } catch (e) {
       value = value.copyWith(errorDescription: e.toString());

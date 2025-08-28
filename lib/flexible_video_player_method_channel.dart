@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
 import 'flexible_video_player_platform_interface.dart';
@@ -11,7 +10,6 @@ class MethodChannelFlexibleVideoPlayer implements FlexibleVideoPlayerPlatform {
   final EventChannel _eventChannel = const EventChannel('flexible_video_player_event');
   final Map<String, Stream<dynamic>> _eventStreamCache = {};
 
-  Stream<dynamic>? _broadcastEventStream;
   @override
   Future<String?> getPlatformVersion() async {
     final version = await methodChannel.invokeMethod<String>('getPlatformVersion');
@@ -110,10 +108,12 @@ class MethodChannelFlexibleVideoPlayer implements FlexibleVideoPlayerPlatform {
       'trackIndex': trackIndex,
     });
   }
-
+  @override
   Future<void> enterPictureInPicture() => methodChannel.invokeMethod('enterPictureInPicture');
+  @override
   Future<void> exitPictureInPicture() => methodChannel.invokeMethod('exitPictureInPicture');
-
+  @override
   Future<void> enterFullscreen() => methodChannel.invokeMethod('enterFullscreen');
+  @override
   Future<void> exitFullscreen() => methodChannel.invokeMethod('exitFullscreen');
 }

@@ -21,10 +21,7 @@ class FlexibleVideoControllerView extends StatefulWidget {
 
 class _FlexibleVideoControllerViewState extends State<FlexibleVideoControllerView> {
 
-  int _positionMs = 0;
-  int _durationMs = 0;
   bool _isPlaying = true;
-  bool _seeking = false;
   bool isFullScreen = false;
 
   String _fmt(int ms) {
@@ -56,10 +53,11 @@ class _FlexibleVideoControllerViewState extends State<FlexibleVideoControllerVie
                       min: 0,
                       max: value.duration.inMilliseconds.toDouble(),
                       value: value.position.inMilliseconds.toDouble(),
-                      onChangeStart: (_) => setState(() => _seeking = true),
-                      onChanged: (v) => setState(() => _positionMs = v.toInt()),
+                      // onChangeStart: (_) => setState(() => _seeking = true),
+                      onChanged: (v) {
+
+                      },
                       onChangeEnd: (v) {
-                        setState(() => _seeking = false);
                         widget.controller.seekTo(v.toInt());
                       },
                     ),

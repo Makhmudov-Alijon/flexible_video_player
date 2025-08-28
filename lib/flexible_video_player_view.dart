@@ -1,6 +1,5 @@
 
 import 'package:flexible_video_player/flexible_video_player_controller.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'flexible_video_controller_view.dart';
@@ -10,8 +9,7 @@ class FlexibleVideoView extends StatefulWidget {
   final double aspectRatio;
   final bool showController;
 
-  const FlexibleVideoView({Key? key, required this.controller,this.aspectRatio = 16/9,this.showController = true})
-    : super(key: key);
+  const FlexibleVideoView({super.key, required this.controller,this.aspectRatio = 16/9,this.showController = true});
 
   @override
   State<FlexibleVideoView> createState() => _FlexibleVideoViewState();
